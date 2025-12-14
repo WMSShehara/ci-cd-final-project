@@ -50,8 +50,26 @@ spec:
     - name: nosetests
       image: python:3.9-slim
       workingDir: $(workspaces.source.path)
-      #!/bin/bash
+      script: |
+        #!/bin/bash
         set -e
         python -m pip install --upgrade pip wheel
         pip install -r requirements.txt
         nosetests $(params.args)
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: your-pipeline
+spec:
+  params:
+    - name: build-image
+      description: The image to build
+      type: string
+  tasks:
+    - name: build
+      taskRef:
+        name: build-task
+      params:
+        - name: IMAGE
+          value: $(params.build-image)
