@@ -56,19 +56,3 @@ spec:
         python -m pip install --upgrade pip wheel
         pip install -r requirements.txt
         nosetests $(params.args)
----
-apiVersion: tekton.dev/v1beta1
-kind: Pipeline
-metadata:
-  name: deploy
-spec:
-  params:
-    - name: build-image
-      type: string
-  tasks:
-    - name: build
-      taskRef:
-        name: build-task
-      params:
-        - name: IMAGE
-          value: $(params.build-image)
