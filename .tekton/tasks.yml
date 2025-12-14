@@ -58,9 +58,9 @@ spec:
         nosetests $(params.args)
 ---
 apiVersion: tekton.dev/v1beta1
-kind: Pipeline
+kind: Task
 metadata:
-  name: your-pipeline
+  name: deploy
 spec:
   params:
     - name: build-image
